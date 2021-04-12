@@ -29,21 +29,39 @@ public class Voting {
     }
 
     public void vote(Person person, ArrayList<String> choosenChoices){
-        voters.add(person);
-        JalaliCalendar date = new JalaliCalendar();
-        for (String choosenChoise : choosenChoices) {
-            if (choosenChoise.equals("Random")) {
-                Random random = new Random();
-                int randInt = random.nextInt(listOfVotesToChoices.size() );
-                HashSet<Vote> votes = listOfVotesToChoices.get(getChoices().get(randInt));
-                Vote vote = new Vote(person, date.getDayOfWeekString());
-                votes.add(vote);
-            }else {
-                HashSet<Vote> votes = listOfVotesToChoices.get(choosenChoise);
-                Vote vote = new Vote(person, date.getDayOfWeekString());
-                votes.add(vote);
+        if(type == 0){
+            if (choosenChoices.size() == 1 ) {
+                voters.add(person);
+                JalaliCalendar date = new JalaliCalendar();
+                String choosenChoise = choosenChoices.get(0);
+                if (choosenChoise.equals("Random")) {
+                    Random random = new Random();
+                    int randInt = random.nextInt(listOfVotesToChoices.size());
+                    HashSet<Vote> votes = listOfVotesToChoices.get(getChoices().get(randInt));
+                    Vote vote = new Vote(person, date.getDayOfWeekString());
+                    votes.add(vote);
+                } else {
+                    HashSet<Vote> votes = listOfVotesToChoices.get(choosenChoise);
+                    Vote vote = new Vote(person, date.getDayOfWeekString());
+                    votes.add(vote);
+                }
+
+            }else{
+                System.out.println("type is 0 and you have to enter just one choice");
+            }
+        }else{
+            if(type == 1){
+                voters.add(person);
+                JalaliCalendar date = new JalaliCalendar();
+                for (String choosenChoise : choosenChoices) {
+                        HashSet<Vote> votes = listOfVotesToChoices.get(choosenChoise);
+                        Vote vote = new Vote(person, date.getDayOfWeekString());
+                        votes.add(vote);
+
+                }
             }
         }
+
     }
 
     public void getVoters() {

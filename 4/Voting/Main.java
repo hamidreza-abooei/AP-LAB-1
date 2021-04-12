@@ -31,7 +31,7 @@ public class Main {
         election.vote(0,p2,choice);
         choice.clear();
         choice.add("Random");
-        election.vote(0,p3,choice);
+        election.vote(0,p1,choice);
         choice.clear();
         choice.add("Random");
         election.vote(0,p4,choice);
