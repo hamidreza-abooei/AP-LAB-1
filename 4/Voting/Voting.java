@@ -10,12 +10,14 @@ public class Voting {
     private String question;
     private ArrayList<Person> voters;
     private HashMap<String, HashSet<Vote>> listOfVotesToChoices;
+    private Result result;
 
     public Voting(int type , String question){
         this.question = question;
         this.type = type;
         listOfVotesToChoices = new HashMap<>();
         voters = new ArrayList<>();
+        result = new Result(listOfVotesToChoices);
 
     }
 
@@ -62,6 +64,9 @@ public class Voting {
             }
         }
 
+    }
+    public void results(){
+        result.showPercent();
     }
 
     public void getVoters() {

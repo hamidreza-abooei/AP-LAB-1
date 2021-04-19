@@ -48,5 +48,5 @@ public class VotingSystem {
         votingList.get(votingNumber).printVotes();
     }
 
-
+    public void showDetailRes(int votingNumber){votingList.get(votingNumber).results();}
 }

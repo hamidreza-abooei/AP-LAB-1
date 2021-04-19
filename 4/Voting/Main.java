@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 	// write your code here
         VotingSystem election = new VotingSystem();
         Person p1 = new Person("Hamidreza","Abooei");
@@ -31,7 +31,7 @@ public class Main {
         election.vote(0,p2,choice);
         choice.clear();
         choice.add("Random");
-        election.vote(0,p1,choice);
+        election.vote(0,p3,choice);
         choice.clear();
         choice.add("Random");
         election.vote(0,p4,choice);
@@ -45,6 +45,8 @@ public class Main {
         election.printVoting(0);
         System.out.println("");
         election.printResult(0);
+        System.out.println('\n');
+        election.showDetailRes(0);
 
     }
 
