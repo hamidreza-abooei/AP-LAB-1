@@ -68,4 +68,13 @@ public class Note implements Serializable {
     public String toString(){
         return "\n"+title + "\t" + date + "\n" + content + "\n";
     }
+
+    /**
+     * this String return the brief title and content of note
+     * @param length the length of content that we want to show
+     * @return String above
+     */
+    public String briefToString(int length){
+        return getTitle() + " " + getContent().substring(0,length - title.length());
+    }
 }

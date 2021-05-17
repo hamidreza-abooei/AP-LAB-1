@@ -7,10 +7,13 @@ import java.util.Scanner;
 public class Main {
     public static ArrayList<String> files = new ArrayList<>();
     public static FileUtils fileUtils = new FileUtils();
-
     public static void main(String[] args) throws IOException {
-        menu();
+        Note newnote = new Note("this is test title" , "this is test context", "02-25-55");
+        fileUtils.fileBufferedWriter(newnote,"testFile");
+        Note readBuffered = fileUtils.fileBufferedReader("testFile");
+        System.out.println(readBuffered);
 
+        menu();
     }
 
     /**
@@ -32,7 +35,11 @@ public class Main {
             }else if(entered == 4){
                 removeFile();
             }else if(entered == 5){
+                briefShow();
+            }else if(entered == 6){
                 isContinued = false;
+            }else{
+                System.out.println("Please enter the right number");
             }
         }
     }
@@ -47,7 +54,8 @@ public class Main {
         System.out.println("2- Show one of the note contents");
         System.out.println("3- Add new note");
         System.out.println("4- remove note");
-        System.out.println("5- Exit");
+        System.out.println("5- show brief version of all files");
+        System.out.println("6- Exit");
     }
 
     /**
@@ -57,12 +65,19 @@ public class Main {
     public static void showAvailableFiles() throws IOException {
         int counter = 0;
         System.out.println("Available notes are listed bellow");
-
-        files = fileUtils.getAvailableNotes();
+        updateAllAvailableFiles();
         for (String file : files) {
             counter++;
             System.out.println(counter + " : " +file);
         }
+    }
+
+    /**
+     * this method update the available files in the directory
+     * @throws IOException
+     */
+    public static void updateAllAvailableFiles() throws IOException {
+        files = fileUtils.getAvailableNotes();
     }
 
     /**
@@ -114,6 +129,21 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
         System.out.println(fileUtils.removeFile(fileName) ? "File has been removed successfully": "FileName is not true");
+    }
+
+    /**
+     * this method print a brief show of note content
+     * @throws IOException dont handle Exception
+     */
+    public static void briefShow() throws IOException {
+        int counter = 0;
+        updateAllAvailableFiles();
+
+        for (String file : files) {
+            counter++;
+            Note readNotes = fileUtils.fileReader(file);
+            System.out.println(counter + " : " + readNotes.briefToString(20));
+        }
     }
 
 
