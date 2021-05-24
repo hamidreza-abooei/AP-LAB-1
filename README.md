@@ -1,6 +1,6 @@
 # AP-LAB
 
-## Name:   Hamidreza Abooei
+## Name:   Hamidreza Abooei Mehrizi
 ## std ID: 9731303
 
 these repo contain homeworks that should be uploaded on Git.
