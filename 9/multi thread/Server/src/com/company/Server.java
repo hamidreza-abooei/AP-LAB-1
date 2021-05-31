@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
+public class Server implements Runnable{
     private final int port;
     private final int serverCapacity;
     private int clientNumber;
@@ -21,10 +21,16 @@ public class Server {
         this.serverCapacity = serverCapacity;
     }
 
+
+    public synchronized void notifyAddNewClient(){
+        notify();
+    }
+
     /**
      * Start server
      */
-    public void startServer(){
+    @Override
+    public synchronized void run() {
         clientNumber = 0;
         ExecutorService pool = Executors.newCachedThreadPool();
         try (ServerSocket connection = new ServerSocket(port)){
@@ -32,18 +38,16 @@ public class Server {
             System.out.println("Server is waiting for new client...");
             while (true){
                 clientNumber ++;
-                pool.execute(new ClientHandler(connection.accept() , clientNumber) );
+                pool.execute(new ClientHandler(connection.accept() , clientNumber, this) );
                 System.out.println("client" + clientNumber + " connected.");
-                if (clientNumber >= serverCapacity){
-                    System.out.println("Server capacity reach its end.");
-                    break;
+                if (clientNumber >= serverCapacity) {
+                    wait();
                 }
             }
-            pool.shutdown();
         } catch (IOException e) {
             System.err.println(e.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
     }
-
 }
